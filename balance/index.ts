@@ -1,7 +1,7 @@
 import expressAsyncHandler from "express-async-handler";
 import { Request, Response } from "express";
 import { solanaConnection } from "../config/connection";
-import { PublicKey } from "@solana/web3.js";
+import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 
 export const getBalance = expressAsyncHandler(
   async (req: Request, res: Response) => {
@@ -17,6 +17,6 @@ export const getBalance = expressAsyncHandler(
       return;
     }
 
-    res.json({ success: true, data: balance });
+    res.json({ success: true, data: Number(balance) / LAMPORTS_PER_SOL });
   }
 );

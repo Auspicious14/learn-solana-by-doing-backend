@@ -8,10 +8,10 @@ dotenv.config();
 const app = express();
 
 
-const clientUrl = process.env.CLIENT_URL as string[] | string
+const clientUrl = process.env.CLIENT_URL;
 const corsOptions = {
-      credentials: true,
-      origin: clientUrl
+  credentials: true,
+  origin: clientUrl ? clientUrl.split(',') : [],
 };
 app.use(cors(corsOptions));
 app.use(bodyParser.json());

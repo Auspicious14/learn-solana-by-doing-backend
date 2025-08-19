@@ -5,10 +5,19 @@ import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 
 export const getBalance = expressAsyncHandler(
   async (req: Request, res: Response) => {
-    const publickKey = req.body.publickKey;
+    const publicKey = req.body.publicKey;
     const connection = solanaConnection();
+    const address = new PublicKey(publicKey);
 
-    const balance = connection.getBalance(publickKey as PublicKey);
+    if (!address || typeof address === "string") {
+      res.json({
+        success: false,
+        message: "Invalid public key",
+      });
+      return;
+    }
+
+    const balance = await connection.getBalance(address);
     if (!balance) {
       res.json({
         success: false,

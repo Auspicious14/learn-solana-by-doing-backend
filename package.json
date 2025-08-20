@@ -6,10 +6,11 @@
   "scripts": {
     "build": "tsc",
     "dev": "npx tsx index.ts",
+    "start": "npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords":["learn", "solana"],
+  "author": "Auspicious14",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
@@ -25,7 +26,6 @@
     "express-async-handler": "^1.2.0",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
-    "tsc": "^2.0.4",
     "typescript": "^5.9.2"
   }
 }

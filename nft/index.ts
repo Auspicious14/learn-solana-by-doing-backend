@@ -4,12 +4,8 @@ import { PublicKey } from "@solana/web3.js";
 import { publicKey as umiPublicKey } from "@metaplex-foundation/umi";
 import { solanaConnection } from "../config/connection";
 import { metaplexConnection } from "../config/metaplex";
-
-interface NFTRequest extends Request {
-  body: {
-    publicKey: string;
-  };
-}
+import { SolanaRequest } from "../types/index";
+import { isValidPublicKey } from "../helper"
 
 interface NFTResponse {
   success: boolean;

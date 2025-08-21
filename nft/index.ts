@@ -15,18 +15,8 @@ interface NFTResponse {
 }
 
 
-const isValidPublicKey = (key: string): boolean => {
-  try {
-    new PublicKey(key);
-    return true;
-  } catch {
-    return false;
-  }
-};
-
-
 export const getNFTsByOwner = expressAsyncHandler(
-  async (req: NFTRequest & { query: { page?: string; limit?: string } }, res: Response<NFTResponse>) => {
+  async (req: SolanaRequest & { query: { page?: string; limit?: string } }, res: Response<NFTResponse>) => {
     try {
       const { publicKey: publicKeyString } = req.body;
       const page = parseInt(req.query.page || "1");

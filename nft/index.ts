@@ -5,7 +5,7 @@ import { publicKey as umiPublicKey } from "@metaplex-foundation/umi";
 import { solanaConnection } from "../config/connection";
 import { metaplexConnection } from "../config/metaplex";
 import { SolanaRequest } from "../types/index";
-import { isValidPublicKey } from "../helper"
+import { isValidPublicKey } from "../helper";
 
 interface NFTResponse {
   success: boolean;
@@ -14,9 +14,11 @@ interface NFTResponse {
   count?: number;
 }
 
-
 export const getNFTsByOwner = expressAsyncHandler(
-  async (req: SolanaRequest & { query: { page?: string; limit?: string } }, res: Response<NFTResponse>) => {
+  async (
+    req: SolanaRequest & { query: { page?: string; limit?: string } },
+    res: Response<NFTResponse>
+  ) => {
     try {
       const { publicKey: publicKeyString } = req.body;
       const page = parseInt(req.query.page || "1");
@@ -29,7 +31,7 @@ export const getNFTsByOwner = expressAsyncHandler(
         });
       }
 
-      const umi = metaplexConnection();
+      const umi: any = metaplexConnection();
       const umiOwnerKey = umiPublicKey(publicKeyString);
 
       const assetsResponse = await umi.rpc.getAssetsByOwner({
@@ -58,7 +60,8 @@ export const getNFTsByOwner = expressAsyncHandler(
         symbol: asset.content?.metadata?.symbol || "",
         description: asset.content?.metadata?.description || "",
         image: asset.content?.files?.[0]?.uri || asset.content?.metadata?.image,
-        collection: asset.grouping?.find((g) => g.group_key === "collection")?.group_value,
+        collection: asset.grouping?.find((g) => g.group_key === "collection")
+          ?.group_value,
         attributes: asset.content?.metadata?.attributes || [],
         uri: asset.content?.json_uri,
         creators: asset.creators || [],
@@ -73,7 +76,6 @@ export const getNFTsByOwner = expressAsyncHandler(
         data: nftData,
         count: nftData.length,
       });
-
     } catch (error) {
       console.error("Pagination error:", error);
       return res.status(500).json({
